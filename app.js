@@ -1,8 +1,10 @@
 require('./api/models/db');
+require('./api/config/passport');
 
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const passport = require('passport');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
@@ -20,6 +22,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
+app.use("/api", routesApi);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
